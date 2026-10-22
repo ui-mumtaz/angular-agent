@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Edit Task' : 'New Task' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+    <mat-form-field appearance="outline" class="field">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" maxlength="100" />
+      @if (form.controls.title.invalid && form.controls.title.touched) {
+        <mat-error>Title is required.</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" rows="3" maxlength="500"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        @for (status of statuses; track status) {
+          <mat-option [value]="status">{{ status }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="cancel()">Cancel</button>
+    <button mat-flat-button color="primary" type="submit">Save</button>
+  </mat-dialog-actions>
+</form>
